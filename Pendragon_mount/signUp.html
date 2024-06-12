@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>The Pendragon Mount</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <!-- https://www.favicon.cc/?action=icon&file_id=93357 -->
+
+    <script>
+        function getFormData() {
+
+            // Get form data
+            const formData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                phoneNumber: document.getElementById('phoneNumber').value,
+                email: document.getElementById('email').value,
+                streetNumber: document.getElementById('streetNumber').value,
+                Town: document.getElementById('Town').value,
+                state: document.getElementById('state').value,
+                zipCode: document.getElementById('zipCode').value,
+                preferPhone: document.getElementById('preferPhone').checked ? 'Phone' : '',
+                preferEmail: document.getElementById('preferEmail').checked ? 'Email' : '',
+                comment: document.getElementById('comment').value,
+                // Add other form fields as needed
+            };
+    
+            // Load existing data from localStorage
+            const existingDataString = localStorage.getItem('formData');
+            const existingData = existingDataString ? JSON.parse(existingDataString) : [];
+    
+            // Check for duplicate email or phone number
+            const isDuplicate = existingData.some(data => data.email === formData.email || data.phoneNumber === formData.phoneNumber);
+    
+            if (isDuplicate) {
+                handleDuplicateEntry(existingData, formData);
+            } else {
+                handleNewEntry(existingData, formData);
+            }
+        }
+
+    </script>    
+    <script src="common.js"></script>
+
+</head>
+
+<body onload="formDataDisplay();">
+    <nav>
+        <ul id="navbar">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="signUp.html">Sign Up</a></li>
+            <li><a href="lottery.html">Lottery</a></li>
+        </ul>
+    </nav>
+
+    <h1>Sign Up</h1>
+
+    <div class="signUpLink">
+        <p style="text-align: center;">Please enter in the information below to be considered for sweepstakes.</p>
+    </div>
+
+    <div class="content" style="padding-left: 5%">
+
+        <div class="signUpLink">
+
+            <form id="signupForm" onsubmit="getFormData(); return false;">
+                <!-- First Name -->
+                <div>
+                    <label>First name:</label>
+                    <input id="firstName" type="text" required placeholder="Enter first name">
+                </div>
+                <br>
+
+                <!-- Last Name -->
+                <div>
+                    <label>Last name:</label>
+                    <input id="lastName" type="text" required placeholder="Enter last name">
+                </div>
+                <br>
+
+                <!-- Phone number -->
+                <div>
+                    <label>Phone number:</label>
+                    <input id="phoneNumber" type="tel" pattern="[0-9]{10}" required placeholder="Enter phone number">
+                </div>
+                <br>
+
+                <!-- Email -->
+                <div>
+                    <label>Email:</label>
+                    <input id="email" type="email" required placeholder="Enter email">
+                </div>
+                <br>
+
+                <!-- Street Address -->
+                <div style="padding-right: 53%;">
+                <fieldset>
+                    <legend>Street Address</legend>
+                    <!-- Street Number -->
+                    <div>
+                        <label>Street Number:</label>
+                        <input id="streetNumber" type="number" required placeholder="Enter street number">
+                    </div>
+                    <br>
+
+                    <!-- Street Name -->
+                    <div>
+                        <label for="streetName">Street Name:</label>
+                        <input id="streetName" type="text" required placeholder="Enter street name">
+                    </div>
+                    <br>
+
+                    <!-- Town -->
+                    <div>
+                        <label>Town:</label>
+                        <input id="Town" type="text" required placeholder="Enter town">
+                    </div>
+                    <br>
+
+                    <!-- State -->
+                    <div>
+                        <label>State:</label>
+                        <input id="state" type="text" required placeholder="Enter state">
+                    </div>
+                    <br>
+
+                    <!-- Zip Code -->
+                    <div>
+                        <label>Zip Code:</label>
+                        <input id="zipCode" type="text" pattern="^\d{5}(-\d{4})?$" required placeholder="Enter zip code">
+                    </div>
+                </fieldset>
+                </div>
+                <br>
+
+                <!-- Preferred Contact -->
+                <div>
+                    <label>Preferred Contact:</label>
+                <div>
+                    <label for="preferPhone">
+                        <input id="preferPhone" type="radio" name="contactMethod" value="Phone" required>
+                        Phone
+                    </label>
+                </div>
+                <div>
+                    <label for="preferEmail">
+                        <input id="preferEmail" type="radio" name="contactMethod" value="Email" required>
+                        Email
+                    </label>
+                </div>
+                </div>
+                <br>
+
+                <!-- Comments -->
+                <div>
+                    <label for="comment">Questions or Concerns:</label>
+                    <p style="text-align: left;"><em>IF there are more than one preferred contact method, enter the other one below:</em></p>
+                    <textarea id="comment" rows="3" cols="50" placeholder="Any other questions or concerns?"></textarea>
+                </div>
+                <br>
+
+                <div>
+                    <button type="submit">Submit</button>
+                    <button type="reset" onclick="clearSuccessMessage(); form.reset()">Reset</button>
+                    <!-- To reset/delete all submitted inputs -->
+                    <button onclick="clearLocalStorage()">Clear Local Storage</button>
+                    <p style="text-align: left;">*Please make sure to refresh page after local storage is cleared.</p>
+                    <p style="text-align: left;">*Clearing Local Storage will delete all sweepstakes entries.</p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Display success message -->
+    <div id="successMessage"></div>
+
+
+    <div style="display: none;" id="formDataDisplay"></div>
+
+    <footer id="footer">
+        <h1>2023 Big Extravaganza</h1>
+    </footer>
+
+</body>
+
+</html>
