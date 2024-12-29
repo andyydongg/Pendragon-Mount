@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="common.js"></script>
+    <title>The Pendragon Mount</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <!-- https://www.favicon.cc/?action=icon&file_id=93357 -->
+</head>
+
+<body>
+    <nav>
+        <ul id="navbar">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="signUp.html">Sign Up</a></li>
+            <li><a href="lottery.html">Lottery</a></li>
+            <!-- <li><a href="winners.html">Winners</a></li> -->
+        </ul>
+    </nav>
+
+    <div class="content">
+        <h1>Sweepstakes Entry List</h1>
+
+        <div class="signUpLink">
+            <p><em>Find the list of the sweepstakes entries below</em></p>
+        </div>
+
+        <div id="formDataDisplay"></div>
+        
+        <!-- Display selected entries here -->
+        <div id="selectedEntries"></div>
+
+        <h4>Click button below to run lottery</h4>
+        
+        <div id="lotteryRun" class="runLottery">
+            <button onclick="runLottery()">Run Lottery</button>
+            <!-- Button to clear selected winners -->
+            <button onclick="clearSelectedWinners()" style="margin-left: 5px;">Clear selected winners</button>
+            <!-- To reset/delete all submitted inputs -->
+            <button onclick="clearLocalStorage()" style="margin-left: 5px;">Clear current sweepstakes entries</button>
+        </div>
+        <p style="text-align: center;">*Please make sure to refresh page after selected winners are cleared OR after clearing sweepstake entries.</p>
+        
+        <!-- Display selected winners here -->
+        <div id="displaySelectedWinners"></div>
+
+    </div>
+
+    <footer id="footer">
+        <h1>2023 Big Extravaganza</h1>  
+    </footer>
+
+<script>
+
+// Define a global variable to store selected winners
+var selectedWinners = [];
+
+// Call formDataDisplay when the page loads
+formDataDisplay();
+
+// Initialize selectedWinners array from local storage
+const storedWinners = localStorage.getItem('selectedWinners');
+if (storedWinners) {
+    selectedWinners = JSON.parse(storedWinners);
+    displaySelectedWinners(); // Display saved winners on page load
+}
+
+function getSelectedEntries() {
+    const selectedEntries = document.getElementById('selectedEntries').children;
+    const selectedData = Array.from(selectedEntries).map(entry => entry.textContent.replace('Selected Winner: ', ''));
+    return selectedData;
+}
+
+function runLottery() {
+    // Get all entries in the formDataDisplay div
+    var entries = document.getElementById('formDataDisplay').children;
+
+    if (entries.length === 0) {
+        alert('No more entries left!');
+        return;
+    }
+
+    // Check if all entries have been selected
+    if (selectedWinners.length === entries.length) {
+        alert('All entries have been selected!');
+        return;
+    }
+
+    // Choose a random index
+    var randomIndex;
+    do {
+        randomIndex = Math.floor(Math.random() * entries.length);
+    } while (selectedWinners.includes(entries[randomIndex].textContent));
+
+    // Get the randomly selected entry
+    var selectedEntry = entries[randomIndex].textContent;
+
+    // Create a new element to display the selected entry
+    var displayElement = document.createElement('p');
+    displayElement.textContent = 'Selected Winner: ' + selectedEntry;
+
+    // Append the display element to the selectedEntries div
+    document.getElementById('selectedEntries').appendChild(displayElement);
+
+    // Remove the selected entry
+    entries[randomIndex].remove();
+
+    // Get and print the selected entries
+    const selectedData = getSelectedEntries();
+    console.log('Selected Entries:', selectedData);
+
+    // Add the selected entry to the variable
+    selectedWinners.push(selectedEntry);
+
+    // Print the selected winners variable
+    console.log('All Selected Winners:', selectedWinners);
+
+    // Save selected winners to local storage
+    localStorage.setItem('selectedWinners', JSON.stringify(selectedWinners));
+
+    // Display the selected winners on the page
+    displaySelectedWinners();
+
+    localStorage.setItem('lotteryRun', 'true');
+
+    window.location.href = 'index.html';
+}
+
+function displaySelectedWinners() {
+    // Display selected winners in a specific div or element on the page
+    const selectedWinnersDiv = document.getElementById('displaySelectedWinners');
+    selectedWinnersDiv.innerHTML = '<h4>Selected Winners:</h4>';
+
+    // Iterate through selected Winners array and add each winner to the display
+    selectedWinners.forEach(winner => {
+        const winnerElement = document.createElement('p');
+        winnerElement.textContent = winner;
+        selectedWinnersDiv.appendChild(winnerElement);
+    });
+}
+
+function clearSelectedWinners() {
+    // Clear selected winners and update local storage
+    selectedWinners = [];
+    localStorage.removeItem('selectedWinners');
+
+    // Clear the displayed selected winners on the page
+    displaySelectedWinners();
+}
+
+</script>
+</body>
+
+</html>
