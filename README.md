@@ -2,7 +2,7 @@
 
 *Drexel University: INFO-151-001 Project*
 
-[https://andyydongg.github.io/Pendragon-Mount/](https://andyydongg.github.io/Pendragon-Mount/)
+Link: [https://andyydongg.github.io/Pendragon-Mount/](https://andyydongg.github.io/Pendragon-Mount/)
 
 • Designed and created a website that represents a survey process
 
