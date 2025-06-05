@@ -3,7 +3,9 @@
 *Drexel University: INFO-151-001 | Web Systems and Services I Project*
 
 This website is designed to mimic a typical sweepstakes process.
-- HTML and CSS are used to display information about the sweepstake rewards, form fields, and various lottery information
-- JavaScript is used to manipulate data, refresh form survey fields, and manage webpages
+- Sweepstake rewards is a car: car information on the landing home page
+- Signed-up Sweepstake participants can be cleared -- just remember to refresh the page after clearing
+
+**Happy Lottery Viewing:)**
 
 Link: [https://andyydongg.github.io/Pendragon-Mount/](https://andyydongg.github.io/Pendragon-Mount/)
