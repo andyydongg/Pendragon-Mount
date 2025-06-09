@@ -1,6 +1,6 @@
 # Pendragon Mount
 
-*Drexel University: INFO-151-001 | Web Systems and Services I Project*
+*Drexel University: INFO-151 | Web Systems and Services I Project*
 
 This website is designed to mimic a typical sweepstakes process.
 - Sweepstake rewards is a car: car information on the landing home page
